@@ -1,5 +1,31 @@
 #!/bin/bash
 
+################################################################################
+#                                                                              #
+# Script for making automatic snapshots of a Google Cloud Compute instance     #
+# using gcloud SDK, for the posibility to make rollbacks from Cloud Console.   #
+#                                                                              #
+################################################################################
+#                                                                              #
+# System requirements:                                                         #
+#   - gcloud SDK                                                               #
+#   - cURL                                                                     #
+#   - Only running in bash for the moment... :(                                #
+#                                                                              #
+# Setup:                                                                       #
+#   - Place the script in the folder of your choosing and run the script as a  #
+#   cronjob.                                                                   #
+#                                                                              #
+# Info:                                                                        #
+#   The snapshots will be added with the name "autosnapshot-instanceName       #
+#   -%d-%m-%H-%M" where %d is the day, %m the month, %H the hour and %M the    #
+#   minute.                                                                    #
+#                                                                              #
+# Released into the Public Domain under the WTFPL license.                     #
+# Sven Anderzén - 2016                                                         #
+#                                                                              #
+################################################################################
+
 # The number of days before the snapshot should be removed.
 numberOfDays=7
 
