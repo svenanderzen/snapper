@@ -3,12 +3,12 @@
 ################################################################################
 #                                                                              #
 # Script for making automatic snapshots of a Google Cloud Compute instance     #
-# using gcloud SDK, for the posibility to make rollbacks from Cloud Console.   #
+# using Cloud SDK, for the possibility to make rollbacks from Cloud Console.   #
 #                                                                              #
 ################################################################################
 #                                                                              #
 # System requirements:                                                         #
-#   - gcloud SDK                                                               #
+#   - Google Cloud SDK                                                         #
 #   - cURL                                                                     #
 #   - Only running in bash for the moment... :(                                #
 #                                                                              #
@@ -29,7 +29,7 @@
 # The number of days before the snapshot should be removed.
 numberOfDays=7
 
-# The Goolge Cloud Compute instance URL for internal meta data
+# The Google Cloud Compute instance URL for internal meta data
 # retrival. (see https://cloud.google.com/compute/docs/metadata)
 metaDataURL=http://metadata.google.internal/computeMetadata/v1/instance
 
