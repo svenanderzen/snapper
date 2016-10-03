@@ -38,11 +38,11 @@ header="Metadata-Flavor: Google"
 
 # Google Cloud instance variables:
 instanceName=$(curl --url ${metaDataURL}/disks/0/device-name \
-					--header "${header}" \
-					--silent)
+                    --header "${header}" \
+                    --silent)
 instanceZone=$(curl --url ${metaDataURL}/zone \
-					--header "${header}" \
-					--silent)
+                    --header "${header}" \
+                    --silent)
 instanceZone=${instanceZone##*/}
 time=$(date "+%d-%m-%H-%M")
 
@@ -54,25 +54,25 @@ time=$(date "+%d-%m-%H-%M")
 
 # Get our list of snapshots made by this script:
 snapshots=$(gcloud compute snapshots list \
-			--regexp "autosnapshot-${instanceName}-.*" \
-			--uri)
+            --regexp "autosnapshot-${instanceName}-.*" \
+            --uri)
 
 # Loop through our list of snapshots and delete those that are older than
 # $numberOfDays days.
 for line in `sed '/^$/d' <<< ${snapshots}`; do
 
-	# Get the snapshot info:
-	snapshotName=${line##*/}
-	snapshotDate=$(gcloud compute snapshots describe ${snapshotName} | \
-		grep "creationTimestamp" | \
-		cut -d "'" -f 2 | \
-		cut -d "T" -f 1)
-	snapshotDate=$(date -d ${snapshotDate} "+%Y%m%d")
-	breakDate=$(date -d "-${numberOfDays} days" "+%Y%m%d")
+    # Get the snapshot info:
+    snapshotName=${line##*/}
+    snapshotDate=$(gcloud compute snapshots describe ${snapshotName} | \
+        grep "creationTimestamp" | \
+        cut -d "'" -f 2 | \
+        cut -d "T" -f 1)
+    snapshotDate=$(date -d ${snapshotDate} "+%Y%m%d")
+    breakDate=$(date -d "-${numberOfDays} days" "+%Y%m%d")
 
-	if [ ${snapshotDate} -le ${breakDate} ]; then
-		$(gcloud compute snapshots delete ${snapshotName} --quiet)
-	fi
+    if [ ${snapshotDate} -le ${breakDate} ]; then
+        $(gcloud compute snapshots delete ${snapshotName} --quiet)
+    fi
 
 done
 
@@ -85,6 +85,6 @@ done
 # Create a snapshot of the boot disk named in the format
 # "autosnapshot-instanceName-01-01-13-37"
 $(gcloud compute disks snapshot ${instanceName} \
-	--snapshot-names autosnapshot-${instanceName}-${time} \
-	--description "This backup was auto created on $(date)." \
-	--zone ${instanceZone})
+    --snapshot-names autosnapshot-${instanceName}-${time} \
+    --description "This backup was auto created on $(date)." \
+    --zone ${instanceZone})
